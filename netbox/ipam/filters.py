@@ -304,10 +304,11 @@ class IPAddressFilterSet(TenancyFilterSet, CustomFieldFilterSet, CreatedUpdatedF
         to_field_name='rd',
         label='VRF (RD)',
     )
-    device = django_filters.CharFilter(
-        method='filter_device',
-        field_name='name',
-        label='Device',
+    device = django_filters.ModelMultipleChoiceFilter(
+        field_name='interface__device__name',
+        queryset=Device.objects.all(),
+        to_field_name='name',
+        label='Device (name)'
     )
     device_id = django_filters.NumberFilter(
         method='filter_device',
